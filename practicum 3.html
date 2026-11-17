@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wind Wave Registration Form</title>
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 13px;
+      margin: 20px;
+    }
+    .form-box {
+      width: 470px;
+      border: 1px solid #e57373;   /* red/pink outline like the sample */
+      padding: 12px 14px;
+    }
+    h2 { margin: 0 0 14px; font-size: 20px; }
+    table { border-collapse: separate; border-spacing: 2px; }
+    td { padding: 1px 2px; vertical-align: middle; }
+    td.label { text-align: right; white-space: nowrap; }
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="number"], select { width: 108px; }
+    input[type="date"] { width: 108px; font-family: monospace; }
+    textarea { width: 168px; height: 70px; font-family: monospace; }
+    .hint { font-size: 11px; }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Wind Wave Registration Form</h2>
+    <p style="margin:-6px 0 10px">Harnessing wind energy for smart cities</p>
+
+    <form action="#" method="post" id="windForm">
+      <table>
+        <tr>
+          <td class="label"><label for="fname">First Name:</label></td>
+          <td colspan="2"><input type="text" id="fname" name="firstName" required autofocus></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="lname">Last Name:</label></td>
+          <td colspan="2"><input type="text" id="lname" name="lastName" required></td>
+        </tr>
+
+        <tr><td colspan="3"><b>Site Address</b></td></tr>
+        <tr>
+          <td class="label"><label for="street">Number &amp; Street:</label></td>
+          <td colspan="2"><input type="text" id="street" name="street" required></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="city">City:</label></td>
+          <td colspan="2"><input type="text" id="city" name="city" required></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="state">State:</label></td>
+          <td colspan="2"><input type="text" id="state" name="state" required></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="zip">Pin / Zip Code:</label></td>
+          <td colspan="2"><input type="text" id="zip" name="zip" pattern="[0-9]{6}" maxlength="6" title="6-digit code" required></td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="survey">Site Survey Date:</label></td>
+          <td colspan="2"><input type="date" id="survey" name="surveyDate" required></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="install">Installation Date:</label></td>
+          <td colspan="2"><input type="date" id="install" name="installDate" required></td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="phone">Phone:</label></td>
+          <td><input type="tel" id="phone" name="phone" placeholder="(###) ###-####"
+                     pattern="[0-9()\-\s]{10,14}" required></td>
+          <td class="hint">(###) ###-####</td>
+        </tr>
+        <tr>
+          <td class="label"><label for="email">E-mail Address:</label></td>
+          <td colspan="2"><input type="email" id="email" name="email" placeholder="name@domain.com" required></td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="turbine">Turbine Type:</label></td>
+          <td colspan="2">
+            <select id="turbine" name="turbine" required>
+              <option value="">--</option>
+              <option>Horizontal axis</option>
+              <option>Vertical axis</option>
+              <option>Rooftop micro</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="label"><label for="capacity">Capacity (kW):</label></td>
+          <td colspan="2"><input type="number" id="capacity" name="capacity" min="1" max="100000" required></td>
+        </tr>
+
+        <tr>
+          <td class="label"><b><label for="requests">Special Requests:</label></b></td>
+          <td colspan="2"><textarea id="requests" name="requests" maxlength="300"
+                                    placeholder="Enter your request here"></textarea></td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            <input type="submit" value="Submit">
+            <input type="reset" value="Clear">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <script>
+    // Dates cannot be in the past
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('survey').min = today;
+    document.getElementById('install').min = today;
+
+    // Installation cannot be before the survey
+    document.getElementById('survey').addEventListener('change', e => {
+      document.getElementById('install').min = e.target.value || today;
+    });
+
+    // Demo only: remove this handler to post to a real server
+    document.getElementById('windForm').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Thank you! Your Wind Wave registration has been received.');
+    });
+  </script>
+</body>
+</html>
